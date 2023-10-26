@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Gym Progress</title>
+    <style>
+      /* Your CSS styles here */
+
+      /* Style the main content */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 20px;
+        padding: 20px;
+        text-align: center;
+      }
+
+      /* Style the title */
+      h1 {
+        color: #333;
+      }
+
+      /* Style the label and select dropdown */
+      label {
+        display: block;
+        margin: 10px 0;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      /* Style the "Go" button */
+      button#goButton {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+      }
+
+      button#goButton:hover {
+        background-color: #555;
+      }
+
+      /* Style the iframe */
+      iframe#daterFrame {
+        width: 100%;
+        height: 500px;
+        border: none;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Gym Progress</h1>
+    <label for="workout">Select a Workout:</label>
+    <select id="workout" onchange="updateIframeSrc()">
+      <option value="Chest">Chest</option>
+      <option value="Quads">Quads</option>
+      <option value="ShoulderBack">Shoulder+Back</option>
+      <option value="Hams">Hams</option>
+      <option value="Arms">Arms</option>
+    </select>
+    <button id="goButton" onclick="loadDater()">Go</button>
+    <iframe
+      id="daterFrame"
+      src=""
+      width="100%"
+      height="500px"
+      frameborder="0"
+    ></iframe>
+
+    <script>
+      var selectedWorkout = "";
+
+      function updateIframeSrc() {
+        selectedWorkout = document.getElementById("workout").value;
+      }
+
+      function loadDater() {
+        document.getElementById("daterFrame").src =
+          selectedWorkout + "chest.html";
+      }
+    </script>
+  </body>
+</html>

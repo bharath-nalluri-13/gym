@@ -1,0 +1,89 @@
+/* Reset some default styles to provide a clean slate */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Style the page background and overall layout */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Style the user input section */
+.user-input-container {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+/* Style input fields */
+label,
+input,
+button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  font-size: 14px; /* Reduced font size for better mobile display */
+}
+
+/* Style the "Done" button */
+button {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px; /* Adjusted font size for better mobile display */
+}
+
+button:hover {
+  background-color: #555;
+}
+
+/* Style the "Reset" button */
+.reset-button {
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px; /* Adjusted font size for better mobile display */
+}
+
+.reset-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Style the "Today's Progress" table */
+#progressTable {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-collapse: collapse;
+  font-size: 12px; /* Reduced font size for better mobile display */
+}
+
+/* Style table headings with reduced font size */
+#progressTable th {
+  font-size: 14px; /* Adjusted font size for better mobile display */
+}
+
+/* Style table data with reduced font size */
+#progressTable td {
+  font-size: 12px; /* Reduced font size for better mobile display */
+}
