@@ -1,89 +1,94 @@
-/* Reset some default styles to provide a clean slate */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Add a container to create the grid layout */
+.container {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column for responsiveness */
+  gap: 20px; /* Gap between the grids */
+  align-items: center; /* Align items vertically in the center */
+  justify-items: center; /* Center the items horizontally */
+  text-align: center; /* Align text in the center */
 }
 
-/* Style the page background and overall layout */
-body {
+/* Apply Arial font to all elements */
+body,
+th,
+td,
+input,
+button {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 20px;
-  padding: 20px;
-  text-align: center;
 }
 
-/* Style the user input section */
-.user-input-container {
+/* Style the "Workout" grid */
+.workout {
   background-color: #f9f9f9;
   border-radius: 10px;
   border: 2px solid #ccc;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
+  padding: 40px; /* Increased padding for more space */
+  box-shadow: 0 0 10px rgba(241, 60, 60, 0.2);
+  max-width: 600px; /* Maximum width for responsiveness */
+  margin: auto; /* Center the grid */
 }
 
-/* Style input fields */
-label,
-input,
-button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  font-size: 14px; /* Reduced font size for better mobile display */
+/* Style the "Workout" heading */
+.workout h2 {
+  color: #081b70; /* Heading text color */
 }
 
-/* Style the "Done" button */
-button {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px; /* Adjusted font size for better mobile display */
+/* Style the "Today's Progress" grid */
+.progress {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  padding: 40px; /* Increased padding for more space */
+  box-shadow: 0 0 10px rgba(241, 60, 60, 0.2);
+  max-width: 600px; /* Maximum width for responsiveness */
+  margin: auto; /* Center the grid */
+  margin-top: 20px; /* Add margin to create space between Workout and Today's Progress */
 }
 
-button:hover {
-  background-color: #555;
-}
-
-/* Style the "Reset" button */
-.reset-button {
-  background-color: #f44336;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px; /* Adjusted font size for better mobile display */
-}
-
-.reset-button:hover {
-  background-color: #d32f2f;
+/* Style the "Today's Progress" heading */
+.progress h2 {
+  color: #081b70; /* Heading text color */
 }
 
 /* Style the "Today's Progress" table */
 #progressTable {
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  border: 2px solid #ccc;
-  padding: 10px;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-collapse: collapse;
-  font-size: 12px; /* Reduced font size for better mobile display */
+  font-size: 14px;
 }
 
-/* Style table headings with reduced font size */
+/* Style table headings for both grids */
 #progressTable th {
-  font-size: 14px; /* Adjusted font size for better mobile display */
+  background-color: #081b70; /* Table header background color */
+  color: #fff; /* Table header text color */
+  font-size: 16px;
+  padding: 12px; /* Increased padding for more space */
 }
 
-/* Style table data with reduced font size */
+/* Style table data for both grids */
 #progressTable td {
-  font-size: 12px; /* Reduced font size for better mobile display */
+  font-size: 14px;
+  padding: 12px; /* Increased padding for more space */
+}
+
+/* Style buttons in the "Today's Progress" grid */
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Style input fields for both grids */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  margin: 5px 0; /* Increased margin for space */
+  padding: 10px; /* Increased padding for more space */
+  border: 1px solid #ccc; /* Define border for inputs */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+/* Style text entry labels */
+table tr th {
+  color: #081b70; /* Text entry label color */
 }
