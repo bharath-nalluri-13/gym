@@ -1,90 +1,226 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Gym Progress</title>
-    <style>
-      /* Your CSS styles here */
-
-      /* Style the main content */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 20px;
-        padding: 20px;
-        text-align: center;
-      }
-
-      /* Style the title */
-      h1 {
-        color: #333;
-      }
-
-      /* Style the label and select dropdown */
-      label {
-        display: block;
-        margin: 10px 0;
-      }
-
-      select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-
-      /* Style the "Go" button */
-      button#goButton {
-        background-color: #333;
-        color: #fff;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        margin-top: 10px;
-      }
-
-      button#goButton:hover {
-        background-color: #555;
-      }
-
-      /* Style the iframe */
-      iframe#daterFrame {
-        width: 100%;
-        height: 500px;
-        border: none;
-        border-radius: 5px;
-      }
-    </style>
+    <title>Chest Workout</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <h1>My Gym Progress</h1>
-    <label for="workout">Select a Workout:</label>
-    <select id="workout" onchange="updateIframeSrc()">
-      <option value="Chest">Chest</option>
-      <option value="Quads">Quads</option>
-      <option value="ShoulderBack">Shoulder+Back</option>
-      <option value="Hams">Hams</option>
-      <option value="Arms">Arms</option>
-    </select>
-    <button id="goButton" onclick="loadDater()">Go</button>
-    <iframe
-      id="daterFrame"
-      src=""
-      width="100%"
-      height="500px"
-      frameborder="0"
-    ></iframe>
+    <div class="container">
+      <div class="workout">
+        <h2>Workout</h2>
+
+        <table>
+          <tr>
+            <th>Workout Name</th>
+            <td>
+              <input
+                type="text"
+                id="workoutName"
+                placeholder="Workout name"
+                value=""
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>No. of Sets</th>
+            <td>
+              <input
+                type="number"
+                id="sets"
+                placeholder="Enter number of sets"
+                oninput="generateRows()"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>Weights x Reps</th>
+            <td id="weightsRepsContainer"></td>
+          </tr>
+          <tr>
+            <th>Notes</th>
+            <td>
+              <input type="text" id="notes" placeholder="Enter notes" />
+            </td>
+          </tr>
+        </table>
+
+        <button onclick="saveData()">Done</button>
+      </div>
+
+      <div class="progress">
+        <h2>Today's Progress</h2>
+        <table id="progressTable">
+          <tr>
+            <th>Workout Name</th>
+            <th>Sets</th>
+            <th>Weights x Reps</th>
+            <th>Notes</th>
+          </tr>
+        </table>
+
+        <div class="buttons">
+          <button class="reset-button" onclick="resetTable()">Reset</button>
+          <button class="reset-button" onclick="copyTable()">Copy Table</button>
+        </div>
+      </div>
+    </div>
 
     <script>
-      var selectedWorkout = "";
+      loadSavedData();
 
-      function updateIframeSrc() {
-        selectedWorkout = document.getElementById("workout").value;
+      function generateRows() {
+        var sets = parseInt(document.getElementById("sets").value);
+        var weightsRepsContainer = document.getElementById(
+          "weightsRepsContainer"
+        );
+        weightsRepsContainer.innerHTML = ""; // Clear previous content
+
+        for (var i = 1; i <= sets; i++) {
+          var row = document.createElement("tr");
+          row.innerHTML = `
+<td>Set ${i}</td>
+<td><input type="text" placeholder="Enter weight x reps for Set ${i}"></td>
+`;
+          weightsRepsContainer.appendChild(row);
+        }
       }
 
-      function loadDater() {
-        document.getElementById("daterFrame").src =
-          selectedWorkout + "chest.html";
+      function saveData() {
+        var workoutName = document.getElementById("workoutName").value;
+        var sets = document.getElementById("sets").value;
+        var notes = document.getElementById("notes").value;
+        var progressTable = document.getElementById("progressTable");
+        var weightsRepsRows = document.querySelectorAll(
+          "#weightsRepsContainer tr"
+        );
+
+        var existingRow = null;
+
+        // Check if the same workout name already exists in the progress table
+        for (var i = 1; i < progressTable.rows.length; i++) {
+          var row = progressTable.rows[i];
+          var nameCell = row.cells[0];
+          if (nameCell.innerHTML === workoutName) {
+            existingRow = row;
+            break;
+          }
+        }
+
+        if (existingRow) {
+          // Update the existing entry
+          var weightsRepsCell = existingRow.cells[2];
+          weightsRepsRows.forEach(function (row) {
+            var weightsRepsInput = row.querySelector("input");
+            weightsRepsCell.innerHTML += weightsRepsInput.value + "<br>";
+          });
+        } else {
+          // Add a new entry
+          var newRow = progressTable.insertRow();
+          var nameCell = newRow.insertCell(0);
+          var setsCell = newRow.insertCell(1);
+          var weightsRepsCell = newRow.insertCell(2);
+          var notesCell = newRow.insertCell(3);
+
+          nameCell.innerHTML = workoutName;
+          setsCell.innerHTML = sets;
+          weightsRepsCell.innerHTML = "";
+          weightsRepsRows.forEach(function (row) {
+            var weightsRepsInput = row.querySelector("input");
+            weightsRepsCell.innerHTML += weightsRepsInput.value + "<br>";
+          });
+          notesCell.innerHTML = notes;
+        }
+
+        // Save the data to local storage
+        saveToLocalStorage();
+
+        // Reset input fields
+        document.getElementById("workoutName").value = "";
+        document.getElementById("sets").value = "";
+        document.getElementById("weightsRepsContainer").innerHTML = "";
+        document.getElementById("notes").value = "";
+      }
+
+      // Load saved data from local storage
+      function loadSavedData() {
+        var savedData = localStorage.getItem("chestWorkoutData");
+        if (savedData) {
+          var data = JSON.parse(savedData);
+          document.getElementById("workoutName").value = data.workoutName;
+          document.getElementById("sets").value = data.sets;
+          document.getElementById("notes").value = data.notes;
+          generateRows();
+          var weightsRepsInputs = document.querySelectorAll(
+            "#weightsRepsContainer input"
+          );
+          data.weightsReps.forEach(function (value, index) {
+            weightsRepsInputs[index].value = value;
+          });
+          // Load the table data into "Today's Progress" table
+          var progressTable = document.getElementById("progressTable");
+          var newRow = progressTable.insertRow();
+          newRow.insertCell(0).innerHTML = data.workoutName;
+          newRow.insertCell(1).innerHTML = data.sets;
+          var weightsRepsCell = newRow.insertCell(2);
+          data.weightsReps.forEach(function (value, index) {
+            weightsRepsCell.innerHTML += value + "<br>";
+          });
+          newRow.insertCell(3).innerHTML = data.notes;
+        }
+      }
+
+      // Save data to local storage
+      function saveToLocalStorage() {
+        var workoutName = document.getElementById("workoutName").value;
+        var sets = document.getElementById("sets").value;
+        var notes = document.getElementById("notes").value;
+        var weightsRepsInputs = document.querySelectorAll(
+          "#weightsRepsContainer input"
+        );
+        var weightsReps = [];
+        weightsRepsInputs.forEach(function (input) {
+          weightsReps.push(input.value);
+        });
+
+        var data = {
+          workoutName: workoutName,
+          sets: sets,
+          notes: notes,
+          weightsReps: weightsReps,
+        };
+
+        localStorage.setItem("chestWorkoutData", JSON.stringify(data));
+      }
+
+      function resetTable() {
+        // Clear the table content
+        var progressTable = document.getElementById("progressTable");
+        while (progressTable.rows.length > 1) {
+          progressTable.deleteRow(1);
+        }
+
+        // Clear the local storage
+        localStorage.removeItem("chestWorkoutData");
+      }
+      function copyTable() {
+        // Select the entire table
+        var table = document.getElementById("progressTable");
+        var range = document.createRange();
+        range.selectNode(table);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+
+        // Copy the selected content to the clipboard
+        document.execCommand("copy");
+
+        // Deselect the table
+        window.getSelection().removeAllRanges();
+
+        // Provide user feedback (e.g., an alert or message)
+        alert(
+          "Table copied to clipboard. You can now paste it (Ctrl+V) wherever you like."
+        );
       }
     </script>
   </body>
